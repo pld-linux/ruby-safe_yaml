@@ -5,12 +5,12 @@
 %define	pkgname	safe_yaml
 Summary:	Parse YAML safely
 Name:		ruby-%{pkgname}
-Version:	0.9.4
+Version:	0.9.5
 Release:	1
 License:	MIT
 Group:		Development/Languages
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
-# Source0-md5:	9788eb941a0935853679ee186a3d481b
+# Source0-md5:	bc039fdd750e4e8e8e8d87502734394e
 URL:		http://dtao.github.com/safe_yaml/
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.656
