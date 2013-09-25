@@ -32,6 +32,8 @@ vulnerability
 %setup -q -n %{pkgname}-%{version}
 
 %build
+%__gem_helper spec
+
 %if %{with tests}
 rspec -Ilib spec
 %endif
@@ -41,6 +43,10 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 
+# install gemspec
+install -d $RPM_BUILD_ROOT%{ruby_specdir}
+cp -p %{pkgname}-%{version}.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -49,3 +55,4 @@ rm -rf $RPM_BUILD_ROOT
 %doc README.md CHANGES.md LICENSE.txt
 %{ruby_vendorlibdir}/safe_yaml.rb
 %{ruby_vendorlibdir}/safe_yaml
+%{ruby_specdir}/safe_yaml-%{version}.gemspec
