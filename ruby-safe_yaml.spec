@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_with	tests		# build without tests
+
 %define	pkgname	safe_yaml
 Summary:	Parse YAML safely
 Name:		ruby-%{pkgname}
@@ -10,6 +14,13 @@ Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
 URL:		http://dtao.github.com/safe_yaml/
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.656
+%if %{with tests}
+BuildRequires:	ruby-hashie
+BuildRequires:	ruby-heredoc_unindent
+BuildRequires:	ruby-ostruct
+BuildRequires:	ruby-rspec
+BuildRequires:	ruby-yaml
+%endif
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -19,6 +30,11 @@ vulnerability
 
 %prep
 %setup -q -n %{pkgname}-%{version}
+
+%build
+%if %{with tests}
+rspec -Ilib spec
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -30,5 +46,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc README.md CHANGES.md LICENSE.txt
 %{ruby_vendorlibdir}/safe_yaml.rb
 %{ruby_vendorlibdir}/safe_yaml
